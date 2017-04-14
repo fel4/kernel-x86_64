@@ -23,5 +23,5 @@ gdt64.user_code: /* . - gdt64 */ /* new */
 gdt64.user_data: /* . - gdt64 */ /* new */
     .quad (1<<44) | (3<<45) | (1<<47) | (1<<41) /* userspace data segment */
 gdt64.pointer:
-    .word . - gdt64 - 1
+    .hword . - gdt64 - 1
     .quad gdt64
