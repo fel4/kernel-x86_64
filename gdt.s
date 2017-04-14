@@ -1,22 +1,27 @@
-section .text
-bits 32
+.text
+.code32
 
-section .bss
-align 4096
+.section .bss
+.align 4096
 
-section .rodata
-align 4096
-global gdt64, gdt64.code, gdt64.data, gdt64.user_code, gdt64.user_data, gdt64.pointer
+.section .rodata
+.align 4096
+.global gdt64
+.global gdt64.code
+.global gdt64.data
+.global gdt64.user_code
+.global gdt64.user_data
+.global gdt64.pointer
 gdt64:
-    dq 0 ; zero entry
-.code: equ $ - gdt64 ; new
-    dq (1<<44) | (1<<47) | (1<<41) | (1<<43) | (1<<53) ; code segment
-.data: equ $ - gdt64 ; new
-    dq (1<<44) | (1<<47) | (1<<41) ; data segment
-.user_code: equ $ - gdt64 ; new
-    dq (1<<44) | (3<<45) | (1<<47) | (1<<41) | (1<<43) | (1<<53) ; userspace code segment
-.user_data: equ $ - gdt64 ; new
-    dq (1<<44) | (3<<45) | (1<<47) | (1<<41) ; userspace data segment
-.pointer:
-    dw $ - gdt64 - 1
-    dq gdt64
+    .quad 0 /* zero entry */
+gdt64.code: /* . - gdt64 */ /* new */
+    .quad (1<<44) | (1<<47) | (1<<41) | (1<<43) | (1<<53) /* code segment */
+gdt64.data: /* . - gdt64 */ /* new */
+    .quad (1<<44) | (1<<47) | (1<<41) /* data segment */
+gdt64.user_code: /* . - gdt64 */ /* new */
+    .quad (1<<44) | (3<<45) | (1<<47) | (1<<41) | (1<<43) | (1<<53) /* userspace code segment */
+gdt64.user_data: /* . - gdt64 */ /* new */
+    .quad (1<<44) | (3<<45) | (1<<47) | (1<<41) /* userspace data segment */
+gdt64.pointer:
+    .word . - gdt64 - 1
+    .quad gdt64
