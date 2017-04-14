@@ -7,7 +7,7 @@ header_start:
     .int 0xe85250d6                   /* multiboot2 magic number */
     .int 0                            /* arch 0 (protected mode x86) */
     .int header_end - header_start    /* header length */
-    .int (0x100000000 - (0xe85250d6 + 0 + (header_end - header_start)))
+    .int 0x100000000 - (0xe85250d6 + 0 + (header_end - header_start)))
 
     /* optional multiboot tags here */
 
