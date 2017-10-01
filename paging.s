@@ -9,13 +9,19 @@ enable_paging:
 
     /* enable PAE-flag in cr4 (Physical Address Extension) */
     movl %cr4, %eax
-    orl $0b100000, %eax
+    movl $1, %ebx
+    shll $5, %ebx
+    orl %ebx, %eax
     movl %eax, %cr4
 
     /* set the long mode bit in the EFER MSR (model specific register) */
-    movl $0xC0000080, %ecx
+    movl $1, %ebx
+    shll $31, %ebx
+    movl %ebx, %ecx
     rdmsr
-    orl $0b100000000, %eax
+    movl $1, %ebx
+    shll $8, %ebx
+    orl %ebx, %eax
     wrmsr
 
     /* enable paging in the cr0 register */
